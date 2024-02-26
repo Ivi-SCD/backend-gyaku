@@ -1,9 +1,10 @@
-package br.com.ic.gyaku.controller;
+package br.com.ic.gyaku.controllers;
 
 import br.com.ic.gyaku.model.federacao.Federacao;
 import br.com.ic.gyaku.model.federacao.FederacaoDTO;
-import br.com.ic.gyaku.repositories.FederacaoRepository;
+import br.com.ic.gyaku.services.FederacaoService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,22 +17,22 @@ import java.util.List;
 public class FederacaoController {
 
     @Autowired
-    private FederacaoRepository federacaoRepository;
+    private FederacaoService federacaoService;
 
     @GetMapping
-    public List<Federacao> listarFederacoes() {
-        return federacaoRepository.findAll();
+    public List<FederacaoDTO> listarFederacoes() {
+        return federacaoService.listarFederacoes();
     }
 
     @GetMapping("nome/{nome}")
-    public List<Federacao> listarFederacoesPorNome(@PathVariable String nome) {
-        return federacaoRepository.findByNomeFederacao(nome);
+    public List<FederacaoDTO> listarFederacoesPorNome(@PathVariable String nome) {
+        return federacaoService.listarFederacoesPorNome(nome);
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Federacao> salvarFederacao(@RequestBody FederacaoDTO federacaoDTO) {
-        Federacao federacao = federacaoRepository.save(new Federacao(federacaoDTO));
+    public ResponseEntity<Federacao> salvarFederacao(@RequestBody @Valid FederacaoDTO federacaoDTO) {
+        Federacao federacao = federacaoService.salvarFederacao(new Federacao(federacaoDTO));
 
         return ResponseEntity.created(URI.create("/federacao/" + federacao.getIdFederacao())).body(federacao);
     }

@@ -20,7 +20,7 @@ public class Federacao {
     }
 
     public Federacao(FederacaoDTO federacaoDTO) {
-        this.nomeFederacao = federacaoDTO.nomeFederacao();
+        this.nomeFederacao = federacaoDTO.getNomeFederacao();
     }
 
     public Integer getIdFederacao() {
