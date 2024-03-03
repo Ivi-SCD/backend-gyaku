@@ -15,5 +15,8 @@ public record AtletaDTO (
         @NotNull(message = "Informe seu peso")
         Double peso,
         @NotNull(message= "Informe sua idade")
-        Integer idade) {
+        Integer idade,
+        @NotNull(message = "Escolha uma das federacoes listadas")
+        String federacao
+        ) {
 }

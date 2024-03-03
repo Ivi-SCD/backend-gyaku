@@ -2,6 +2,7 @@ package br.com.ic.gyaku.model.atleta;
 
 import br.com.ic.gyaku.model.enums.Faixa;
 import br.com.ic.gyaku.model.enums.Modalidade;
+import br.com.ic.gyaku.model.federacao.Federacao;
 import jakarta.persistence.*;
 
 @Entity
@@ -21,15 +22,20 @@ public class Atleta {
     @Column(nullable = false)
     private Integer idade;
 
+    @ManyToOne
+    @JoinColumn(name = "id_federacao")
+    private Federacao federacao;
+
     public Atleta() {
     }
 
-    public Atleta(String nomeAtleta, Faixa faixaAtleta, Modalidade modalidadeAtleta, Double peso, Integer idade) {
+    public Atleta(String nomeAtleta, Faixa faixaAtleta, Modalidade modalidadeAtleta, Double peso, Integer idade, Federacao federacao) {
         this.nomeAtleta = nomeAtleta;
         this.faixaAtleta = faixaAtleta;
         this.modalidadeAtleta = modalidadeAtleta;
         this.peso = peso;
         this.idade = idade;
+        this.federacao = federacao;
     }
 
     public Atleta(AtletaDTO atletaDTO) {
@@ -86,5 +92,13 @@ public class Atleta {
 
     public void setIdade(Integer idade) {
         this.idade = idade;
+    }
+
+    public Federacao getFederacao() {
+        return federacao;
+    }
+
+    public void setFederacao(Federacao federacao) {
+        this.federacao = federacao;
     }
 }
