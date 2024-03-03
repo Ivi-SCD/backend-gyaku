@@ -9,4 +9,7 @@ import java.util.List;
 public interface FederacaoRepository extends JpaRepository<Federacao, Integer> {
     @Query(value = "SELECT * FROM federacao f WHERE f.nome_federacao LIKE %:nome%", nativeQuery = true)
     List<Federacao> findByNomeFederacao(String nome);
+
+    @Query(value = "SELECT * FROM federacao f WHERE f.nome_federacao = :nomeFederacao", nativeQuery = true)
+    Federacao findByNome(String nomeFederacao);
 }
