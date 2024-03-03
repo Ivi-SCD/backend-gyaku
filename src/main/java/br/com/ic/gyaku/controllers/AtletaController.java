@@ -2,7 +2,8 @@ package br.com.ic.gyaku.controllers;
 
 import br.com.ic.gyaku.model.atleta.Atleta;
 import br.com.ic.gyaku.model.atleta.AtletaDTO;
-import br.com.ic.gyaku.repositories.AtletaRepository;
+import br.com.ic.gyaku.model.atleta.AtletaDTOResposta;
+import br.com.ic.gyaku.services.AtletaService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -17,22 +19,22 @@ import java.util.List;
 public class AtletaController {
 
     @Autowired
-    private AtletaRepository atletaRepository;
+    private AtletaService atletaService;
 
     @GetMapping
-    public List<Atleta> listarAtletas() {
-        return atletaRepository.findAll();
+    public HashSet<AtletaDTOResposta> listarAtletas() {
+        return atletaService.listarAtletas();
     }
 
     @GetMapping("/{id}")
-    public Atleta encontrarAtletaPorId(@PathVariable Integer id) {
-        return atletaRepository.findById(id).get();
+    public AtletaDTOResposta encontrarAtletaPorId(@PathVariable Integer id) {
+        return atletaService.encontrarAtletaPorId(id);
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Atleta> salvarFederacao(@RequestBody @Valid AtletaDTO atletaDTO) {
-        Atleta atleta = atletaRepository.save(new Atleta(atletaDTO));
+    public ResponseEntity<Atleta> salvarAtleta(@RequestBody @Valid AtletaDTO atletaDTO) {
+        Atleta atleta = atletaService.salvarAtleta(atletaDTO);
 
         return ResponseEntity.created(URI.create("/atleta/" + atleta.getIdAtleta())).body(atleta);
 

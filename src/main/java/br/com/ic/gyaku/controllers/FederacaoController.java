@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -20,12 +21,12 @@ public class FederacaoController {
     private FederacaoService federacaoService;
 
     @GetMapping
-    public List<FederacaoDTO> listarFederacoes() {
+    public HashSet<FederacaoDTO> listarFederacoes() {
         return federacaoService.listarFederacoes();
     }
 
     @GetMapping("nome/{nome}")
-    public List<FederacaoDTO> listarFederacoesPorNome(@PathVariable String nome) {
+    public HashSet<FederacaoDTO> listarFederacoesPorNome(@PathVariable String nome) {
         return federacaoService.listarFederacoesPorNome(nome);
     }
 
