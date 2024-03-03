@@ -1,6 +1,10 @@
 package br.com.ic.gyaku.model.federacao;
 
+import br.com.ic.gyaku.model.atleta.Atleta;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Federacao {
@@ -11,6 +15,9 @@ public class Federacao {
     private Integer idFederacao;
     @Column(name = "nome_federacao")
     private String nomeFederacao;
+
+    @OneToMany(mappedBy = "federacao")
+    List<Atleta> atletas = new ArrayList<>();
 
     public Federacao() {
     }
@@ -37,6 +44,14 @@ public class Federacao {
 
     public void setNomeFederacao(String nomeFederacao) {
         this.nomeFederacao = nomeFederacao;
+    }
+
+    public void adicionarAtleta(Atleta atleta) {
+        this.atletas.add(atleta);
+    }
+
+    public void removerAtleta(Atleta atleta) {
+        this.atletas.remove(atleta);
     }
 
     @Override
